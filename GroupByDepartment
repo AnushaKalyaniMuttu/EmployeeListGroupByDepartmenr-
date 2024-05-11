@@ -1,0 +1,42 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static class Employee {
+        private String name;
+        private String department;
+
+        public Employee(String name, String department) {
+            this.name = name;
+            this.department = department;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDepartment() {
+            return department;
+        }
+    }
+
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+                new Employee("John", "HR"),
+                new Employee("Alice", "Finance"),
+                new Employee("Bob", "IT"),
+                new Employee("Emma", "HR"),
+                new Employee("Mike", "IT")
+        );
+
+        Map<String, List<Employee>> employeesByDepartment = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+
+        employeesByDepartment.forEach((department, employeeList) -> {
+            System.out.println(department + ":");
+            employeeList.forEach(employee -> System.out.println("\t" + employee.getName()));
+        });
+    }
+}
